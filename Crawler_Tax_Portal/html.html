@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <div id="captchaContainer"></div>
+    
+    <script>
+        // Fetch the CAPTCHA data from captcha.txt
+        fetch('captcha.txt')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(captchaData => {
+                // Display the SVG CAPTCHA in the container
+                const container = document.getElementById('captchaContainer');
+                container.innerHTML = captchaData.content; // Updated to use 'content' key
+
+                // Apply styles to ensure proper rendering
+                const svgElement = container.querySelector('svg');
+                if (svgElement) {
+                    svgElement.style.width = '3 50px'; // Set a smaller width
+                    svgElement.style.height = 'auto'; // Maintain aspect ratio
+                }
+
+                // Log the CAPTCHA key to the console
+                console.log('CAPTCHA Key:', captchaData.key);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    </script>
+</body>
+</html>
