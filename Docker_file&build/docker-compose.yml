@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  crawler-api:
+    build: .
+    container_name: crawler-tax-api
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_URI=mongodb+srv://AdminMola:MolaMola123@molanpl.gplydvn.mongodb.net/
+      - DB_NAME=MolaDatabase
+      - FLASK_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
